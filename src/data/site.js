@@ -2,13 +2,13 @@
 export const SITE = {
   name: 'Herre&Dame',
   // TODO: replace with the real domain once it is connected.
-  url: (typeof process !== 'undefined' && process.env && process.env.SITE_URL) || 'https://herredame.pk',
+  url: (typeof process !== 'undefined' && process.env && process.env.SITE_URL) || 'https://herredame.com',
   tagline: 'The polo, perfected. For him and for her.',
   description:
     'Herre&Dame makes piqué polos, hoodies, sweatshirts and tees for him and for her. Couple sets, honest prices and cash on delivery across Pakistan.',
   // TODO: WhatsApp business number in international format, digits only (e.g. 923001234567).
   whatsapp: '923451860326',
-  email: 'hello@herredame.pk',
+  email: 'hello@herredame.com',
   instagram: 'https://www.instagram.com/herredame/',
   currency: 'PKR',
   country: 'PK',

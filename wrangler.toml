@@ -6,5 +6,5 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "herre-dame-orders"
-# Replace with the id printed by: npx wrangler d1 create herre-dame-orders
-database_id = "00000000-0000-0000-0000-000000000000"
+# D1 database in the Herredame.contact Cloudflare account.
+database_id = "c2f332c5-29e4-4586-a2f9-4c238a079d21"
