@@ -69,7 +69,7 @@ export function priceCart(lines = []) {
       }
     } else if (promo.type === 'tiered-percent') {
       const tier = promo.tiers.find((t) => eligible.length >= t.min);
-      if (tier) amount = Math.round(eligible.reduce((s, u) => s + u.price, 0) * tier.pct);
+      if (tier) amount = Math.round((eligible.reduce((s, u) => s + u.price, 0) * tier.pct) / 10) * 10;
     }
     if (amount > 0) discounts.push({ id: promo.id, label: promo.label, amount });
   }

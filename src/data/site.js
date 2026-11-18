@@ -7,7 +7,7 @@ export const SITE = {
   description:
     'Herre&Dame makes piqué polos, hoodies, sweatshirts and tees for him and for her. Couple sets, honest prices and cash on delivery across Pakistan.',
   // TODO: WhatsApp business number in international format, digits only (e.g. 923001234567).
-  whatsapp: '920000000000',
+  whatsapp: '923451860326',
   email: 'hello@herredame.pk',
   instagram: 'https://www.instagram.com/herredame/',
   currency: 'PKR',

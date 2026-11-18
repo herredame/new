@@ -10,18 +10,19 @@
 import images from './images.json' with { type: 'json' };
 
 // ---------------------------------------------------------------------------
-// Price book (PKR). Polos are confirmed. Others are PLACEHOLDERS: set them
-// before launch. The build prints a warning while any placeholder remains.
+// Price book (PKR). Polos confirmed by Mansab. Others set from a competitor
+// scan on 18 Nov 2026 (Outfitters, Brackets, Cambridge, Fitted, RAAH, Naqees).
+// Mark a price `placeholder: true` and the build prints a warning.
 // ---------------------------------------------------------------------------
 export const PRICE_BOOK = {
   'classic-pique-polo': { price: 2990 },
   'tipped-polo': { price: 3250 },
   'gold-detail-polo': { price: 3250 },
-  'unisex-hoodie': { price: 4490, placeholder: true },
-  'unisex-sweatshirt': { price: 3690, placeholder: true },
-  'womens-tee': { price: 2490, placeholder: true },
-  'womens-tank': { price: 1990, placeholder: true },
-  'white-sunglasses': { price: 1990, placeholder: true },
+  'unisex-hoodie': { price: 3990 },
+  'unisex-sweatshirt': { price: 3490 },
+  'womens-tee': { price: 1990 },
+  'womens-tank': { price: 1690 },
+  'white-sunglasses': { price: 1990 },
 };
 
 export const CATEGORIES = [
@@ -46,14 +47,14 @@ export const CATEGORIES = [
   {
     id: 'hoodies', gender: 'unisex', path: '/unisex/hoodies/', name: 'Hoodies', h1: 'Unisex Hoodies',
     title: 'Hoodies in Pakistan for Men & Women | Couple Hoodies',
-    description: 'Unisex fleece hoodies in six colours. Any 2 save 10%, any 3 save 15%, and His & Hers hoodie sets. Cash on delivery across Pakistan.',
-    intro: 'Soft fleece hoodies cut to fit him and her. Mix any hoodies and sweatshirts: 2 save 10%, 3 or more save 15%.',
+    description: 'Unisex 320 GSM fleece hoodies in six colours, Rs 3,990. Any 2 save 10%, any 3 save 15%, and His & Hers hoodie sets. Cash on delivery across Pakistan.',
+    intro: '320 GSM brushed-fleece hoodies cut to fit him and her. Mix any hoodies and sweatshirts: 2 save 10%, 3 or more save 15%.',
   },
   {
     id: 'sweatshirts', gender: 'unisex', path: '/unisex/sweatshirts/', name: 'Sweatshirts', h1: 'Unisex Sweatshirts',
     title: 'Sweatshirts in Pakistan for Men & Women | 11 Colours',
-    description: 'Unisex crew-neck sweatshirts in eleven colours. Any 2 save 10%, any 3 save 15%. Cash on delivery across Pakistan.',
-    intro: 'Crew-neck sweatshirts in eleven colours, from safe black and navy to pistachio and tea pink. Mix any hoodies and sweatshirts: 2 save 10%, 3 or more save 15%.',
+    description: 'Unisex 320 GSM crew-neck sweatshirts in eleven colours, Rs 3,490. Any 2 save 10%, any 3 save 15%. Cash on delivery across Pakistan.',
+    intro: '320 GSM crew-neck sweatshirts in eleven colours, from safe black and navy to pistachio and tea pink. Mix any hoodies and sweatshirts: 2 save 10%, 3 or more save 15%.',
   },
   {
     id: 'accessories', gender: 'unisex', path: '/accessories/', name: 'Accessories', h1: 'Accessories',
@@ -112,8 +113,8 @@ export const PRODUCTS = [
   {
     id: 'unisex-hoodie', category: 'hoodies', name: 'Signature Hoodie', sizeChart: 'fleece',
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    short: 'A soft brushed-fleece hoodie with a kangaroo pocket and the H&D chest mark. Made to be shared.',
-    details: ['Brushed fleece, soft on the inside', 'Lined hood with drawcords', 'Kangaroo pocket, ribbed cuffs and hem', 'Unisex relaxed fit'],
+    short: 'A 320 GSM brushed-fleece hoodie with a kangaroo pocket and the H&D chest mark. Made for winter evenings, and made to be shared.',
+    details: ['320 GSM brushed fleece, soft on the inside', 'Lined hood with drawcords', 'Kangaroo pocket, ribbed cuffs and hem', 'Unisex relaxed fit'],
     care: 'Machine wash cold inside out with similar colours. Do not tumble dry. Dry flat in shade.',
     colors: [
       c('black', 'Black', 'black-hoodie'), c('white', 'White', 'white-hoodie'), c('maroon', 'Maroon & Gold', 'maroon-gold-hoodie'),
@@ -123,8 +124,8 @@ export const PRODUCTS = [
   {
     id: 'unisex-sweatshirt', category: 'sweatshirts', name: 'Crew Sweatshirt', sizeChart: 'fleece',
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    short: 'A clean crew-neck sweatshirt in brushed fleece. The everyday winter layer, in eleven colours.',
-    details: ['Brushed fleece, soft on the inside', 'Crew neck with ribbed collar, cuffs and hem', 'Embroidered H&D chest mark', 'Unisex relaxed fit'],
+    short: 'A clean crew-neck sweatshirt in 320 GSM brushed fleece. The everyday winter layer, in eleven colours.',
+    details: ['320 GSM brushed fleece, soft on the inside', 'Crew neck with ribbed collar, cuffs and hem', 'Embroidered H&D chest mark', 'Unisex relaxed fit'],
     care: 'Machine wash cold inside out with similar colours. Do not tumble dry. Dry flat in shade.',
     colors: [
       c('black', 'Black', 'black-sweatshirt'), c('navy', 'Navy', 'navy-sweatshirt'), c('olive', 'Olive Green', 'olive-sweatshirt'),
