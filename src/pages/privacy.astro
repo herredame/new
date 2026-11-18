@@ -1,0 +1,10 @@
+---
+import Page from '../components/Page.astro';
+import { SITE } from '../data/site.js';
+---
+<Page h1="Privacy" title="Privacy Policy" description="How Herre&Dame uses the details you give us when you order.">
+  <p>When you order, we collect your name, mobile number, delivery address and, if you give it, your email. We use these only to deliver your order, confirm it with you on WhatsApp and handle exchanges.</p>
+  <p>We share your name, number and address with our courier so they can deliver your parcel. We don't sell your details to anyone.</p>
+  <p>Your bag is stored in your own browser until you place the order. We don't use advertising cookies.</p>
+  <p>To have your details deleted, message us on <a href={`https://wa.me/${SITE.whatsapp}`}>WhatsApp</a> or email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+</Page>

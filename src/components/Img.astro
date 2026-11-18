@@ -1,0 +1,18 @@
+---
+// Responsive 4:5 product image from the generated WebP set.
+interface Props { src: string; alt: string; sizes?: string; eager?: boolean; class?: string; widths?: number[] }
+const { src, alt, sizes = '(max-width: 700px) 50vw, 25vw', eager = false, class: cls, widths = [600, 1200] } = Astro.props;
+const srcset = widths.map((w) => `${src}-${w}.webp ${w}w`).join(', ');
+---
+<img
+  src={`${src}-${widths[0]}.webp`}
+  srcset={srcset}
+  sizes={sizes}
+  alt={alt}
+  width={widths[0]}
+  height={Math.round(widths[0] * 1.25)}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  fetchpriority={eager ? 'high' : undefined}
+  class={cls}
+/>

@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import { SHIPPING } from '../data/site.js';
+const cities = ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Bahawalpur', 'Sargodha', 'Abbottabad'];
+---
+<Base title="Checkout" description="Checkout with cash on delivery." noindex>
+  <div class="wrap">
+    <h1 style="margin-top:32px">Checkout</h1>
+    <div class="cart-grid">
+      <form class="form" data-checkout novalidate>
+        <h2 style="font-size:24px;margin:0">Delivery details</h2>
+        <label>Full name<input name="name" autocomplete="name" required maxlength="80" /></label>
+        <div class="row2">
+          <label>Mobile number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="03XX XXXXXXX" required maxlength="20" /></label>
+          <label>Email (optional)<input name="email" type="email" autocomplete="email" maxlength="120" /></label>
+        </div>
+        <label>Address<textarea name="address" autocomplete="street-address" required maxlength="300" placeholder="House, street, block, phase / sector"></textarea></label>
+        <div class="row2">
+          <label>Area or society<input name="area" placeholder="e.g. DHA Phase 6, Bahria Town" maxlength="80" /></label>
+          <label>City<input name="city" list="cities" autocomplete="address-level2" required maxlength="60" /></label>
+        </div>
+        <datalist id="cities">{cities.map((c) => <option value={c} />)}</datalist>
+        <label>Order notes (optional)<textarea name="notes" maxlength="500" placeholder="Delivery time, landmark, gift message"></textarea></label>
+        <label class="check"><input type="checkbox" name="gift" /> <span>This is a gift. Hide prices on the invoice.</span></label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <h2 style="font-size:24px;margin:16px 0 0">Payment</h2>
+        <div class="pay-option"><strong>Cash on delivery</strong><br /><span class="muted">Pay the rider in cash when your order arrives. We'll confirm your order on WhatsApp first.</span></div>
+
+        <button class="btn btn-block" type="submit" data-submit>Place order</button>
+        <p class="form-msg" data-msg role="alert"></p>
+        <p class="muted" style="font-size:12px">By placing your order you agree to our <a href="/shipping-and-exchanges/" style="text-decoration:underline">delivery and exchange policy</a>. Delivery in {SHIPPING.deliveryDays}.</p>
+      </form>
+      <aside class="summary">
+        <h2>Your order</h2>
+        <div data-summary><p class="muted">Loading…</p></div>
+      </aside>
+    </div>
+  </div>
+  <script>
+    import { clearCart, readCart } from '../scripts/cart-store.js';
+    import { currentCart, summaryHtml, lineDetail, esc, formatPKR } from '../scripts/cart-view.js';
+    const form = document.querySelector('[data-checkout]') as HTMLFormElement;
+    const msg = form.querySelector('[data-msg]') as HTMLElement;
+    const btn = form.querySelector('[data-submit]') as HTMLButtonElement;
+    const sum = document.querySelector('[data-summary]') as HTMLElement;
+
+    function render() {
+      const cart = currentCart();
+      if (!cart.lines.length) {
+        sum.innerHTML = '<p>Your bag is empty. <a href="/" style="text-decoration:underline">Keep shopping</a></p>';
+        btn.disabled = true;
+        return;
+      }
+      sum.innerHTML = cart.lines.map((l) => `<div class="sum-row"><span>${l.qty} × ${esc(l.name)}<br><span class="muted" style="font-size:12px">${lineDetail(l)}</span></span><span>${formatPKR(l.lineTotal)}</span></div>`).join('') + '<hr style="border:0;border-top:1px solid var(--sand-3)">' + summaryHtml(cart);
+    }
+    render();
+
+    const normalisePhone = (v: string) => {
+      const d = v.replace(/[^\d+]/g, '').replace(/^\+?92/, '0').replace(/^0092/, '0');
+      return /^03\d{9}$/.test(d) ? d : null;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      const missing = ['name', 'phone', 'address', 'city'].filter((k) => !String(data[k] || '').trim());
+      if (missing.length) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please fill in your name, mobile number, address and city.';
+        (form.elements.namedItem(missing[0]) as HTMLElement)?.focus();
+        return;
+      }
+      if (!normalisePhone(data.phone)) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please enter a Pakistani mobile number, like 0300 1234567.';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Placing order…';
+      msg.textContent = '';
+      try {
+        const res = await fetch('/api/order', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ customer: { ...data, gift: !!data.gift }, lines: readCart() }),
+        });
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || !out.orderId) throw new Error(out.error || 'Something went wrong. Please try again or order on WhatsApp.');
+        try { sessionStorage.setItem('hd_last_order', JSON.stringify(out)); } catch {}
+        clearCart();
+        location.href = `/order-confirmed/?id=${encodeURIComponent(out.orderId)}`;
+      } catch (err: any) {
+        msg.className = 'form-msg err';
+        msg.textContent = err.message;
+        btn.disabled = false;
+        btn.textContent = 'Place order';
+      }
+    });
+  </script>
+</Base>

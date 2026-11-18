@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import BundleCard from '../../components/BundleCard.astro';
+import { BUNDLES, PROMOTIONS, bundleUrl } from '../../data/catalog.js';
+import { breadcrumbs, itemList } from '../../lib/schema.js';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Sets & Bundles', href: '/bundles/' }];
+const couple = BUNDLES.filter((b) => b.audience === 'couple');
+const rest = BUNDLES.filter((b) => b.audience !== 'couple');
+---
+<Base
+  title="Couple Sets & Bundles | Matching Polos, Hoodies & Sweatshirts"
+  description="Matching couple sets and multi-packs from Herre&Dame: His & Hers hoodies, couple polo and tee sets, sweatshirt 3-packs. Separate sizes for each piece, cash on delivery."
+  jsonld={[breadcrumbs(crumbs), itemList(BUNDLES.map((b) => bundleUrl(b.id)))]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <header class="plp-head">
+      <h1>Couple Sets &amp; Bundles</h1>
+      <p>Buy together and save. Every set lets you pick a separate size for each piece, and every size can be exchanged.</p>
+    </header>
+    <h2>Couple sets</h2>
+    <div class="grid grid-3">{couple.map((b) => <BundleCard bundle={b} />)}</div>
+    <h2 style="margin-top:56px">Packs &amp; pairs</h2>
+    <div class="grid grid-3">{rest.map((b) => <BundleCard bundle={b} />)}</div>
+    <section class="section">
+      <h2>Or build your own</h2>
+      <div class="offers">
+        {PROMOTIONS.map((p) => <div class="offer"><span class="eyebrow">{p.label}</span><p style="margin:8px 0 0">{p.blurb}. Applied automatically in your bag.</p></div>)}
+      </div>
+    </section>
+  </div>
+</Base>

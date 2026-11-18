@@ -1,0 +1,205 @@
+---
+// Product detail page: one URL per colour (/products/<product>-<colour>/), sizes picked on the page.
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import BundleCard from '../../components/BundleCard.astro';
+import Img from '../../components/Img.astro';
+import { PRODUCTS, BUNDLES, PROMOTIONS, SIZE_CHARTS, GENDERS, categoryById, productById, priceOf, imagesFor, productUrl, skuOf } from '../../data/catalog.js';
+import { SHIPPING, SITE } from '../../data/site.js';
+import { formatPKR } from '../../lib/pricing.js';
+import { breadcrumbs, productGroup } from '../../lib/schema.js';
+
+export function getStaticPaths() {
+  return PRODUCTS.flatMap((product) =>
+    product.colors
+      .filter((color) => imagesFor(color.folder).images.length)
+      .map((color) => ({ params: { slug: `${product.id}-${color.id}` }, props: { product, color } })),
+  );
+}
+
+const { product, color } = Astro.props;
+const cat = categoryById[product.category];
+const gender = GENDERS[cat.gender];
+const price = priceOf(product.id);
+const set = imagesFor(color.folder);
+const chart = product.sizeChart ? SIZE_CHARTS[product.sizeChart] : null;
+const promo = PROMOTIONS.find((p) => p.categories.includes(product.category));
+const bundles = BUNDLES.filter((b) => b.items.some((it) => it.product === product.id && it.color === color.id));
+const otherBundles = bundles.length ? bundles : BUNDLES.filter((b) => b.items.some((it) => it.product === product.id)).slice(0, 2);
+
+// "Complete the look": partner pieces by category, per the bundle strategy.
+const pairing = {
+  polos: [['womens-tee', color.id === 'royal-blue' ? 'white' : color.id], ['unisex-hoodie', 'navy'], ['unisex-sweatshirt', 'black']],
+  tees: [['tipped-polo', 'black'], ['womens-tank', 'black'], ['unisex-hoodie', 'navy']],
+  tanks: [['womens-tee', 'white'], ['unisex-hoodie', 'nude'], ['white-sunglasses', 'white']],
+  hoodies: [['unisex-hoodie', color.id === 'black' ? 'white' : 'black'], ['unisex-sweatshirt', 'nude'], ['womens-tee', 'white']],
+  sweatshirts: [['unisex-hoodie', 'maroon'], ['unisex-sweatshirt', color.id === 'navy' ? 'olive' : 'navy'], ['womens-tee', 'white']],
+  accessories: [['womens-tee', 'black'], ['tipped-polo', 'black'], ['womens-tank', 'red']],
+}[product.category]
+  .map(([pid, cid]) => ({ p: productById[pid], c: productById[pid]?.colors.find((c) => c.id === cid) }))
+  .filter(({ p, c }) => p && c && !(p.id === product.id && c.id === color.id));
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  ...(cat.id === 'accessories' ? [] : [{ name: gender.name, href: gender.path }]),
+  { name: cat.h1, href: cat.path },
+  { name: `${product.name}, ${color.name}`, href: productUrl(product.id, color.id) },
+];
+const audienceWord = cat.gender === 'men' ? "Men's " : cat.gender === 'women' ? "Women's " : '';
+const title = `${color.name} ${product.name} | ${audienceWord}${cat.name} Pakistan`;
+const description = `${product.name} in ${color.name}, ${formatPKR(price)}. ${product.short} Cash on delivery across Pakistan, free delivery over ${formatPKR(SHIPPING.freeThreshold)}.`;
+const waText = encodeURIComponent(`Hi Herre&Dame, I have a question about the ${product.name} in ${color.name}: ${new URL(productUrl(product.id, color.id), SITE.url).href}`);
+---
+<Base
+  title={title}
+  description={description}
+  type="product"
+  image={set.images[0] ? `${set.images[0].src}-1200.jpg` : undefined}
+  jsonld={[productGroup(product), breadcrumbs(crumbs)]}
+  preload={set.images[0] ? [{ href: `${set.images[0].src}-1200.webp`, imagesrcset: `${set.images[0].src}-600.webp 600w, ${set.images[0].src}-1200.webp 1200w`, imagesizes: '(max-width: 900px) 88vw, 55vw' }] : []}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <div class="pdp">
+      <div class="gallery" aria-label="Product images">
+        {set.images.map((img, i) => (
+          <figure>
+            <Img src={img.src} alt={`${product.name} in ${color.name}${img.kind === 'lifestyle' ? ', worn' : ''}, image ${i + 1}`} eager={i === 0} sizes={i === 0 ? '(max-width: 900px) 88vw, 55vw' : '(max-width: 900px) 88vw, 27vw'} />
+          </figure>
+        ))}
+      </div>
+
+      <div class="buybox" data-pdp data-product={product.id} data-color={color.id} data-name={product.name} data-color-name={color.name}>
+        <p class="eyebrow">{audienceWord}{cat.name}</p>
+        <h1>{product.name}</h1>
+        <p class="price">{formatPKR(price)}</p>
+        <p class="price-note">Cash on delivery · {price >= SHIPPING.freeThreshold ? 'Ships free' : `Free delivery over ${formatPKR(SHIPPING.freeThreshold)}`}</p>
+        <p>{product.short}</p>
+
+        {product.colors.length > 1 && (
+          <>
+            <div class="opt-label"><span>Colour: <strong>{color.name}</strong></span></div>
+            <div class="swatches">
+              {product.colors.filter((c) => imagesFor(c.folder).images.length).map((c) => (
+                <a class="swatch" href={productUrl(product.id, c.id)} title={c.name} aria-label={c.name} aria-current={c.id === color.id ? 'true' : undefined} style={`background:${imagesFor(c.folder).swatch || '#ccc'}`} />
+              ))}
+            </div>
+          </>
+        )}
+
+        <div class="opt-label">
+          <span>Size: <strong data-size-label>{product.sizes.length === 1 ? product.sizes[0] : 'Choose'}</strong></span>
+          {chart && <button type="button" data-open-chart>Size chart</button>}
+        </div>
+        <div class="sizes" role="group" aria-label="Size">
+          {product.sizes.map((s) => (
+            <button type="button" class="size" data-size={s} data-sku={skuOf(product.id, color.id, s)} aria-pressed={product.sizes.length === 1 ? 'true' : 'false'}>{s}</button>
+          ))}
+        </div>
+
+        <div class="add-row">
+          <div class="qty">
+            <button type="button" data-qty="-1" aria-label="Decrease quantity">−</button>
+            <input type="number" value="1" min="1" max="20" aria-label="Quantity" data-qty-input />
+            <button type="button" data-qty="1" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="btn" data-add>Add to bag</button>
+        </div>
+        <p class="form-msg" data-msg role="alert"></p>
+
+        {promo && <div class="multi-hint"><strong>Buy more, save more.</strong> {promo.blurb}. Mix colours and styles.</div>}
+
+        <ul class="assure">
+          <li>Cash on delivery anywhere in Pakistan</li>
+          <li>Delivered in {SHIPPING.deliveryDays}</li>
+          <li>Free size exchange within {SHIPPING.exchangeDays} days</li>
+          <li><a href={`https://wa.me/${SITE.whatsapp}?text=${waText}`} rel="noopener">Not sure about size? Ask us on WhatsApp</a></li>
+        </ul>
+
+        <details class="acc" open>
+          <summary>Details</summary>
+          <div><ul>{product.details.map((d) => <li>{d}</li>)}</ul></div>
+        </details>
+        {chart && (
+          <details class="acc" id="size-chart">
+            <summary>Size &amp; fit</summary>
+            <div>
+              <p>{chart.note}</p>
+              <table class="sizes-t">
+                <thead><tr>{chart.cols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+                <tbody>{chart.rows.map((r) => <tr>{r.map((v, i) => i === 0 ? <th scope="row">{v}</th> : <td>{`${v}″`}</td>)}</tr>)}</tbody>
+              </table>
+              <p class="muted" style="margin-top:8px">Garment measured flat, in inches. <a href="/size-guide/">How to measure</a></p>
+            </div>
+          </details>
+        )}
+        <details class="acc">
+          <summary>Care</summary>
+          <div><p>{product.care}</p></div>
+        </details>
+        <details class="acc">
+          <summary>Delivery &amp; exchanges</summary>
+          <div>
+            <p>Delivery in {SHIPPING.deliveryDays}. Free over {formatPKR(SHIPPING.freeThreshold)}, otherwise {formatPKR(SHIPPING.fee)}. Pay cash when your parcel arrives.</p>
+            <p>Wrong size? Message us within {SHIPPING.exchangeDays} days of delivery and we'll exchange it. <a href="/shipping-and-exchanges/">Full policy</a></p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    {otherBundles.length > 0 && (
+      <section class="section" style="padding-top:0">
+        <div class="section-head"><h2>Complete the set</h2><a class="link-arrow" href="/bundles/">All sets</a></div>
+        <div class="grid grid-3">{otherBundles.map((b) => <BundleCard bundle={b} />)}</div>
+      </section>
+    )}
+
+    {pairing.length > 0 && (
+      <section class="section" style="padding-top:0">
+        <div class="section-head"><h2>Pairs well with</h2></div>
+        <div class="grid grid-3">{pairing.map(({ p, c }) => <ProductCard product={p} color={c} showDots={false} />)}</div>
+      </section>
+    )}
+  </div>
+
+  <script>
+    import { addLine, toast } from '../../scripts/cart-store.js';
+    const root = document.querySelector('[data-pdp]') as HTMLElement;
+    const msg = root.querySelector('[data-msg]') as HTMLElement;
+    const qtyInput = root.querySelector('[data-qty-input]') as HTMLInputElement;
+    const label = root.querySelector('[data-size-label]') as HTMLElement;
+    let sku: string | null = (root.querySelector('.size[aria-pressed="true"]') as HTMLElement)?.dataset.sku ?? null;
+
+    root.querySelectorAll<HTMLButtonElement>('.size').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        root.querySelectorAll('.size').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        sku = btn.dataset.sku!;
+        label.textContent = btn.dataset.size!;
+        msg.textContent = '';
+      }),
+    );
+    root.querySelectorAll<HTMLButtonElement>('[data-qty]').forEach((b) =>
+      b.addEventListener('click', () => {
+        qtyInput.value = String(Math.max(1, Math.min(20, (parseInt(qtyInput.value, 10) || 1) + Number(b.dataset.qty))));
+      }),
+    );
+    root.querySelector('[data-open-chart]')?.addEventListener('click', () => {
+      const d = document.getElementById('size-chart') as HTMLDetailsElement;
+      d.open = true;
+      d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    root.querySelector('[data-add]')!.addEventListener('click', () => {
+      if (!sku) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please choose a size.';
+        return;
+      }
+      addLine({ type: 'item', sku, qty: Math.max(1, parseInt(qtyInput.value, 10) || 1) });
+      msg.className = 'form-msg ok';
+      msg.textContent = 'Added to your bag.';
+      toast(`${root.dataset.name} (${root.dataset.colorName}, ${label.textContent}) added. <a href="/cart/">View bag</a>`);
+    });
+  </script>
+</Base>

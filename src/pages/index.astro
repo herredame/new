@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import BundleCard from '../components/BundleCard.astro';
+import Img from '../components/Img.astro';
+import { SITE, SHIPPING } from '../data/site.js';
+import { PRODUCTS, BUNDLES, productById, imagesFor, BUNDLE_IMAGES, HERO } from '../data/catalog.js';
+import { organization, website } from '../lib/schema.js';
+
+const polos = PRODUCTS.filter((p) => p.category === 'polos').flatMap((p) => p.colors.map((c) => ({ p, c })));
+const hoodie = productById['unisex-hoodie'];
+const sweat = productById['unisex-sweatshirt'];
+const winter = [
+  { p: hoodie, c: hoodie.colors.find((c) => c.id === 'maroon') },
+  { p: sweat, c: sweat.colors.find((c) => c.id === 'nude') },
+  { p: hoodie, c: hoodie.colors.find((c) => c.id === 'white') },
+  { p: sweat, c: sweat.colors.find((c) => c.id === 'olive') },
+];
+const coupleImg = BUNDLE_IMAGES['couple-black-set_polo-tee'];
+const featuredBundles = ['his-and-hers-hoodie-set', 'couple-polo-tee-set-white', 'winter-sweatshirt-3-pack'].map((id) => BUNDLES.find((b) => b.id === id));
+const tiles = [
+  { href: '/men/polo-shirts/', label: 'Polo shirts', img: imagesFor('teal-polo').images.find((i) => i.kind === 'lifestyle') },
+  { href: '/unisex/hoodies/', label: 'Hoodies', img: imagesFor('white-hoodie').images.find((i) => i.kind === 'lifestyle') },
+  { href: '/unisex/sweatshirts/', label: 'Sweatshirts', img: imagesFor('nude-sweatshirt').images.find((i) => i.kind === 'lifestyle') },
+  { href: '/women/t-shirts/', label: 'Women\'s tees', img: imagesFor('white-tee').images.find((i) => i.kind === 'lifestyle') },
+  { href: '/women/tank-tops/', label: 'Tank tops', img: imagesFor('teal-tank').images.find((i) => i.kind === 'lifestyle') },
+  { href: '/bundles/', label: 'Couple sets', img: imagesFor('black-double-tipping-polo').images.find((i) => i.kind === 'lifestyle') },
+];
+---
+<Base
+  title="Herre&Dame | Polo Shirts, Hoodies & Couple Sets in Pakistan"
+  description={SITE.description}
+  jsonld={[organization(), website()]}
+  preload={[
+    { href: `${HERO.desktop}-1920.webp`, imagesrcset: `${HERO.desktop}-960.webp 960w, ${HERO.desktop}-1920.webp 1920w`, imagesizes: '100vw', media: '(min-width: 701px)' },
+    { href: HERO.mobile, media: '(max-width: 700px)' },
+  ]}
+>
+  <section class="hero">
+    <picture>
+      <source media="(max-width: 700px)" srcset={HERO.mobile} />
+      <img src={`${HERO.desktop}-1920.webp`} srcset={`${HERO.desktop}-960.webp 960w, ${HERO.desktop}-1920.webp 1920w`} sizes="100vw" alt="A couple in matching black Herre&Dame polo and tee" width="1920" height="1080" fetchpriority="high" />
+    </picture>
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:#f1ebe2">Winter 2026 · For him &amp; for her</p>
+      <h1>Polo shirts, perfected. For him and for her.</h1>
+      <p>Piqué polos from Rs 2,990, fleece hoodies and sweatshirts, and matching couple sets. Cash on delivery across Pakistan.</p>
+      <div class="actions">
+        <a class="btn" href="/men/polo-shirts/">Shop polos</a>
+        <a class="btn btn-light" href="/bundles/">Shop couple sets</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="promises">
+    <div><strong>Cash on delivery</strong>Pay when it arrives</div>
+    <div><strong>Free delivery</strong>Over Rs {SHIPPING.freeThreshold.toLocaleString('en-PK')}</div>
+    <div><strong>{SHIPPING.exchangeDays}-day exchange</strong>Wrong size? We swap it</div>
+    <div><strong>Honest prices</strong>No fake sales, ever</div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">The hero</p>
+          <h2>Polo shirts</h2>
+        </div>
+        <a class="link-arrow" href="/men/polo-shirts/">Shop all polos</a>
+      </div>
+      <div class="grid">
+        {polos.slice(0, 4).map(({ p, c }, i) => <ProductCard product={p} color={c} showDots={false} />)}
+      </div>
+      <div class="offers" style="margin-top:32px">
+        <div class="offer"><span class="eyebrow">One polo</span><strong>Rs 2,990</strong><span class="muted">Ships free</span></div>
+        <div class="offer"><span class="eyebrow">Any two</span><strong>Rs 5,490</strong><span class="muted">Mix colours and styles</span></div>
+        <div class="offer"><span class="eyebrow">Any three</span><strong>Rs 7,990</strong><span class="muted">The best value in the shop</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sand">
+    <div class="wrap split">
+      {coupleImg && <img src={`${coupleImg.src}-1200.webp`} srcset={`${coupleImg.src}-600.webp 600w, ${coupleImg.src}-1200.webp 1200w`} sizes="(max-width: 800px) 100vw, 55vw" alt="Matching black polo and tee couple set" loading="lazy" width="1200" height={Math.round(1200 / coupleImg.ratio)} />}
+      <div>
+        <p class="eyebrow">The couple edit</p>
+        <h2>Matching sets, sized for each of you</h2>
+        <p>Herre &amp; Dame means "gentlemen &amp; ladies". Every set comes with a separate size for each piece, so the person paying doesn't have to guess for the person wearing it. Wrong size? We exchange it.</p>
+        <a class="btn" href="/bundles/">Shop sets &amp; bundles</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Sets &amp; bundles</p>
+          <h2>Buy together, save more</h2>
+        </div>
+        <a class="link-arrow" href="/bundles/">See all sets</a>
+      </div>
+      <div class="grid grid-3">
+        {featuredBundles.map((b) => <BundleCard bundle={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sand">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Winter layers</p>
+          <h2>Hoodies &amp; sweatshirts</h2>
+        </div>
+        <a class="link-arrow" href="/unisex/hoodies/">Shop hoodies</a>
+      </div>
+      <p>Mix any hoodies and sweatshirts: 2 save 10%, 3 or more save 15%.</p>
+      <div class="grid">
+        {winter.map(({ p, c }) => <ProductCard product={p} color={c} showDots={false} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Shop by category</h2></div>
+      <div class="tiles">
+        {tiles.map((t) => (
+          <a class="tile" href={t.href}>
+            {t.img && <Img src={t.img.src} alt={t.label} sizes="(max-width: 700px) 100vw, 33vw" />}
+            <span>{t.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

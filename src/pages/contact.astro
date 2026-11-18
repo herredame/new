@@ -1,0 +1,12 @@
+---
+import Page from '../components/Page.astro';
+import { SITE } from '../data/site.js';
+---
+<Page h1="Contact us" title="Contact Herre&Dame" description="Talk to Herre&Dame on WhatsApp, Instagram or email about sizes, orders and exchanges.">
+  <p>The fastest way to reach us is WhatsApp. We reply during the day, every day.</p>
+  <p><a class="btn" href={`https://wa.me/${SITE.whatsapp}`} rel="noopener">Message us on WhatsApp</a></p>
+  <ul>
+    <li>Instagram: <a href={SITE.instagram} rel="noopener">@herredame</a></li>
+    <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+  </ul>
+</Page>

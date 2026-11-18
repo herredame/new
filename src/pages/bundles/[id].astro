@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Img from '../../components/Img.astro';
+import BundleCard from '../../components/BundleCard.astro';
+import { BUNDLES, BUNDLE_IMAGES, SIZE_CHARTS, productById, imagesFor, bundlePrice, bundleUrl, productUrl } from '../../data/catalog.js';
+import { SHIPPING } from '../../data/site.js';
+import { formatPKR } from '../../lib/pricing.js';
+import { breadcrumbs, bundleProduct } from '../../lib/schema.js';
+
+export function getStaticPaths() {
+  return BUNDLES.map((bundle) => ({ params: { id: bundle.id }, props: { bundle } }));
+}
+const { bundle } = Astro.props;
+const { list, price, saving } = bundlePrice(bundle);
+const imgs = [bundle.image, bundle.altImage].filter(Boolean).map((k) => BUNDLE_IMAGES[k]).filter(Boolean);
+const items = bundle.items.map((it, i) => {
+  const p = productById[it.product];
+  const c = p.colors.find((c) => c.id === it.color);
+  return { i, p, c, label: it.label || `${p.name}, ${c.name}`, img: imagesFor(c.folder).images[0], chart: p.sizeChart && SIZE_CHARTS[p.sizeChart] };
+});
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Sets & Bundles', href: '/bundles/' }, { name: bundle.name, href: bundleUrl(bundle.id) }];
+const others = BUNDLES.filter((b) => b.id !== bundle.id).slice(0, 3);
+---
+<Base
+  title={`${bundle.name} | Save ${formatPKR(saving)}`}
+  description={`${bundle.name}: ${bundle.short} ${formatPKR(price)} instead of ${formatPKR(list)}. Cash on delivery across Pakistan.`}
+  type="product"
+  image={imgs[0] ? `${imgs[0].src}-1200.jpg` : undefined}
+  jsonld={[bundleProduct(bundle), breadcrumbs(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <div class="pdp">
+      <div class="gallery">
+        {imgs.map((img, i) => (
+          <figure style={`aspect-ratio:${img.ratio}`}>
+            <img src={`${img.src}-1200.webp`} srcset={`${img.src}-600.webp 600w, ${img.src}-1200.webp 1200w`} sizes="(max-width: 900px) 88vw, 55vw" alt={`${bundle.name}${i ? ', flat lay' : ''}`} width="1200" height={Math.round(1200 / img.ratio)} loading={i ? 'lazy' : 'eager'} />
+          </figure>
+        ))}
+        {items.map(({ img, label }) => img && <figure><Img src={img.src} alt={label} sizes="(max-width: 900px) 88vw, 27vw" /></figure>)}
+      </div>
+      <div class="buybox" data-bundle={bundle.id} data-name={bundle.name}>
+        <p class="eyebrow">{bundle.audience === 'couple' ? 'Couple set' : 'Bundle'}</p>
+        <h1>{bundle.name}</h1>
+        <p class="price">{formatPKR(price)}<span class="strike">{formatPKR(list)}</span><span class="save">Save {formatPKR(saving)}</span></p>
+        <p class="price-note">Cash on delivery · {price >= SHIPPING.freeThreshold ? 'Ships free' : `Free delivery over ${formatPKR(SHIPPING.freeThreshold)}`}</p>
+        <p>{bundle.short}</p>
+        <div class="opt-label"><span>Choose a size for each piece</span><a href="/size-guide/" style="text-transform:none;letter-spacing:.04em;text-decoration:underline">Size guide</a></div>
+        <div class="bundle-items">
+          {items.map(({ i, p, c, label, img }) => (
+            <div class="bundle-item" data-item={i}>
+              <a href={productUrl(p.id, c.id)}>{img && <Img src={img.src} alt="" widths={[600]} sizes="72px" />}</a>
+              <div>
+                <p style="margin:0 0 8px;font-size:14px"><strong>{label}</strong><br /><span class="muted">{p.name} · {c.name}</span></p>
+                <div class="sizes" role="group" aria-label={`Size for ${label}`}>
+                  {p.sizes.map((s) => <button type="button" class="size" data-size={s} aria-pressed={p.sizes.length === 1 ? 'true' : 'false'}>{s}</button>)}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="add-row"><button type="button" class="btn btn-block" data-add>Add set to bag · {formatPKR(price)}</button></div>
+        <p class="form-msg" data-msg role="alert"></p>
+        <ul class="assure">
+          <li>Separate sizes for each piece</li>
+          <li>Each piece can be exchanged for size within {SHIPPING.exchangeDays} days</li>
+          <li>Cash on delivery anywhere in Pakistan</li>
+        </ul>
+      </div>
+    </div>
+    <section class="section" style="padding-top:0">
+      <div class="section-head"><h2>More sets</h2><a class="link-arrow" href="/bundles/">All sets</a></div>
+      <div class="grid grid-3">{others.map((b) => <BundleCard bundle={b} />)}</div>
+    </section>
+  </div>
+
+  <script>
+    import { addLine, toast } from '../../scripts/cart-store.js';
+    const root = document.querySelector('[data-bundle]') as HTMLElement;
+    const msg = root.querySelector('[data-msg]') as HTMLElement;
+    root.querySelectorAll<HTMLElement>('[data-item]').forEach((item) =>
+      item.querySelectorAll<HTMLButtonElement>('.size').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          item.querySelectorAll('.size').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
+          msg.textContent = '';
+        }),
+      ),
+    );
+    root.querySelector('[data-add]')!.addEventListener('click', () => {
+      const sizes = [...root.querySelectorAll<HTMLElement>('[data-item]')].map((item) => (item.querySelector('.size[aria-pressed="true"]') as HTMLElement)?.dataset.size);
+      if (sizes.some((s) => !s)) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please choose a size for each piece.';
+        return;
+      }
+      addLine({ type: 'bundle', bundle: root.dataset.bundle!, sizes: sizes as string[], qty: 1 });
+      msg.className = 'form-msg ok';
+      msg.textContent = 'Set added to your bag.';
+      toast(`${root.dataset.name} added. <a href="/cart/">View bag</a>`);
+    });
+  </script>
+</Base>

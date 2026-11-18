@@ -1,0 +1,20 @@
+---
+import Page from '../components/Page.astro';
+import { SHIPPING, SITE } from '../data/site.js';
+const rs = (n) => 'Rs ' + n.toLocaleString('en-PK');
+---
+<Page h1="Delivery & exchanges" title="Delivery, Cash on Delivery & Exchanges" description={`Free delivery over ${rs(SHIPPING.freeThreshold)}, cash on delivery across Pakistan and ${SHIPPING.exchangeDays}-day size exchanges.`}>
+  <h2>Delivery</h2>
+  <ul>
+    <li>We deliver everywhere in Pakistan in {SHIPPING.deliveryDays}.</li>
+    <li>Delivery is free on orders of {rs(SHIPPING.freeThreshold)} or more. Below that it costs {rs(SHIPPING.fee)}.</li>
+    <li>We confirm every order on WhatsApp before it is dispatched.</li>
+  </ul>
+  <h2>Cash on delivery</h2>
+  <p>Pay the rider in cash when your parcel arrives. Please keep the exact amount ready.</p>
+  <h2>Size exchanges</h2>
+  <p>If something doesn't fit, message us on <a href={`https://wa.me/${SITE.whatsapp}`}>WhatsApp</a> within {SHIPPING.exchangeDays} days of delivery. Items must be unworn, unwashed and have their tags. We send the new size once the original is back with us.</p>
+  <p>Each piece in a set can be exchanged on its own.</p>
+  <h2>Damaged or wrong item</h2>
+  <p>Send us a photo on WhatsApp within 48 hours of delivery and we'll replace it at our cost.</p>
+</Page>

@@ -1,0 +1,866 @@
+{
+  "products": {
+    "black-double-tipping-polo": {
+      "category": "Men-Polos",
+      "images": [
+        {
+          "src": "/img/p/black-double-tipping-polo/black-double-tipping-polo_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-double-tipping-polo/black-double-tipping-polo_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-double-tipping-polo/black-double-tipping-polo_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-double-tipping-polo/black-double-tipping-polo_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/black-double-tipping-polo/black-double-tipping-polo_05_flat",
+      "swatch": "#afa9a2"
+    },
+    "pink-polo": {
+      "category": "Men-Polos",
+      "images": [
+        {
+          "src": "/img/p/pink-polo/pink-polo_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/pink-polo/pink-polo_02_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/pink-polo/pink-polo_03_flat",
+      "swatch": "#d5c3bc"
+    },
+    "royal-blue-white-tipping-polo": {
+      "category": "Men-Polos",
+      "images": [
+        {
+          "src": "/img/p/royal-blue-white-tipping-polo/royal-blue-white-tipping-polo_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/royal-blue-white-tipping-polo/royal-blue-white-tipping-polo_02_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/royal-blue-white-tipping-polo/royal-blue-white-tipping-polo_03_flat",
+      "swatch": "#b0b5bf"
+    },
+    "teal-polo": {
+      "category": "Men-Polos",
+      "images": [
+        {
+          "src": "/img/p/teal-polo/teal-polo_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-polo/teal-polo_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-polo/teal-polo_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-polo/teal-polo_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/teal-polo/teal-polo_05_flat",
+      "swatch": "#acbfc4"
+    },
+    "white-gold-polo": {
+      "category": "Men-Polos",
+      "images": [
+        {
+          "src": "/img/p/white-gold-polo/white-gold-polo_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-gold-polo/white-gold-polo_02_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/white-gold-polo/white-gold-polo_03_flat",
+      "swatch": "#ddd7ce"
+    },
+    "white-sunglasses": {
+      "category": "Unisex-Accessories",
+      "images": [
+        {
+          "src": "/img/p/white-sunglasses/white-sunglasses_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-sunglasses/white-sunglasses_02_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-sunglasses/white-sunglasses_03_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": null,
+      "swatch": null
+    },
+    "black-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/black-hoodie/black-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-hoodie/black-hoodie_02_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/black-hoodie/black-hoodie_03_flat",
+      "swatch": "#938e89"
+    },
+    "lilac-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/lilac-hoodie/lilac-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/lilac-hoodie/lilac-hoodie_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/lilac-hoodie/lilac-hoodie_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/lilac-hoodie/lilac-hoodie_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/lilac-hoodie/lilac-hoodie_05_flat",
+      "swatch": "#cdc5c3"
+    },
+    "maroon-gold-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/maroon-gold-hoodie/maroon-gold-hoodie_07_flat",
+      "swatch": "#b09190"
+    },
+    "navy-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/navy-hoodie/navy-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/navy-hoodie/navy-hoodie_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/navy-hoodie/navy-hoodie_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/navy-hoodie/navy-hoodie_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/navy-hoodie/navy-hoodie_05_flat",
+      "swatch": "#9a9a9e"
+    },
+    "nude-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/nude-hoodie/nude-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/nude-hoodie/nude-hoodie_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/nude-hoodie/nude-hoodie_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-hoodie/nude-hoodie_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-hoodie/nude-hoodie_05_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/nude-hoodie/nude-hoodie_06_flat",
+      "swatch": "#cec2b4"
+    },
+    "white-hoodie": {
+      "category": "Unisex-Hoodies",
+      "images": [
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_06_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_07_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_08_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_09_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-hoodie/white-hoodie_10_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/white-hoodie/white-hoodie_11_flat",
+      "swatch": "#dbd6ce"
+    },
+    "black-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-sweatshirt/black-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/black-sweatshirt/black-sweatshirt_07_flat",
+      "swatch": "#999490"
+    },
+    "camo-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/camo-sweatshirt/camo-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/camo-sweatshirt/camo-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/camo-sweatshirt/camo-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/camo-sweatshirt/camo-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/camo-sweatshirt/camo-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/camo-sweatshirt/camo-sweatshirt_06_flat",
+      "swatch": "#a3a7ad"
+    },
+    "chocolate-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/chocolate-sweatshirt/chocolate-sweatshirt_07_flat",
+      "swatch": "#c2aea2"
+    },
+    "grey-heather-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/grey-heather-sweatshirt/grey-heather-sweatshirt_01_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/grey-heather-sweatshirt/grey-heather-sweatshirt_02_flat",
+      "swatch": "#c6bfb5"
+    },
+    "maroon-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/maroon-sweatshirt/maroon-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/maroon-sweatshirt/maroon-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/maroon-sweatshirt/maroon-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/maroon-sweatshirt/maroon-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/maroon-sweatshirt/maroon-sweatshirt_05_flat",
+      "swatch": "#b39490"
+    },
+    "navy-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/navy-sweatshirt/navy-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/navy-sweatshirt/navy-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/navy-sweatshirt/navy-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/navy-sweatshirt/navy-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/navy-sweatshirt/navy-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/navy-sweatshirt/navy-sweatshirt_06_flat",
+      "swatch": "#a1a1a3"
+    },
+    "nude-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_07_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_08_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_09_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/nude-sweatshirt/nude-sweatshirt_10_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/nude-sweatshirt/nude-sweatshirt_11_flat",
+      "swatch": "#d4c8b8"
+    },
+    "olive-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/olive-sweatshirt/olive-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/olive-sweatshirt/olive-sweatshirt_07_flat",
+      "swatch": "#a7a397"
+    },
+    "pistachio-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/pistachio-sweatshirt/pistachio-sweatshirt_07_flat",
+      "swatch": "#c5c6b7"
+    },
+    "tea-pink-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/tea-pink-sweatshirt/tea-pink-sweatshirt_07_flat",
+      "swatch": "#d8c3b6"
+    },
+    "white-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/white-sweatshirt/white-sweatshirt_01_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-sweatshirt/white-sweatshirt_02_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-sweatshirt/white-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/white-sweatshirt/white-sweatshirt_04_flat",
+      "swatch": "#dcd7ce"
+    },
+    "yellow-sweatshirt": {
+      "category": "Unisex-Sweatshirts",
+      "images": [
+        {
+          "src": "/img/p/yellow-sweatshirt/yellow-sweatshirt_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/yellow-sweatshirt/yellow-sweatshirt_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/yellow-sweatshirt/yellow-sweatshirt_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/yellow-sweatshirt/yellow-sweatshirt_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/yellow-sweatshirt/yellow-sweatshirt_05_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/yellow-sweatshirt/yellow-sweatshirt_06_flat",
+      "swatch": "#dccca2"
+    },
+    "black-tank": {
+      "category": "Women-Tanks",
+      "images": [
+        {
+          "src": "/img/p/black-tank/black-tank_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_03_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_06_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-tank/black-tank_07_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/black-tank/black-tank_08_flat",
+      "swatch": "#c2bbb2"
+    },
+    "red-tank": {
+      "category": "Women-Tanks",
+      "images": [
+        {
+          "src": "/img/p/red-tank/red-tank_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/red-tank/red-tank_02_studio",
+          "kind": "studio"
+        }
+      ],
+      "flat": "/img/p/red-tank/red-tank_03_flat",
+      "swatch": "#dbbab5"
+    },
+    "teal-tank": {
+      "category": "Women-Tanks",
+      "images": [
+        {
+          "src": "/img/p/teal-tank/teal-tank_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_03_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_06_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_07_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_08_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/teal-tank/teal-tank_09_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/teal-tank/teal-tank_10_flat",
+      "swatch": "#c2c6c0"
+    },
+    "black-tee": {
+      "category": "Women-Tees",
+      "images": [
+        {
+          "src": "/img/p/black-tee/black-tee_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-tee/black-tee_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/black-tee/black-tee_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/black-tee/black-tee_04_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/black-tee/black-tee_05_flat",
+      "swatch": "#b1aba3"
+    },
+    "red-tee": {
+      "category": "Women-Tees",
+      "images": [
+        {
+          "src": "/img/p/red-tee/red-tee_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/red-tee/red-tee_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/red-tee/red-tee_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/red-tee/red-tee_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/red-tee/red-tee_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/red-tee/red-tee_06_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/red-tee/red-tee_07_flat",
+      "swatch": "#d5a9a8"
+    },
+    "teal-tee": {
+      "category": "Women-Tees",
+      "images": [
+        {
+          "src": "/img/p/teal-tee/teal-tee_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/teal-tee/teal-tee_02_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/teal-tee/teal-tee_03_flat",
+      "swatch": "#aeb9b2"
+    },
+    "white-tee": {
+      "category": "Women-Tees",
+      "images": [
+        {
+          "src": "/img/p/white-tee/white-tee_01_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_02_studio",
+          "kind": "studio"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_03_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_04_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_05_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_06_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_07_lifestyle",
+          "kind": "lifestyle"
+        },
+        {
+          "src": "/img/p/white-tee/white-tee_08_lifestyle",
+          "kind": "lifestyle"
+        }
+      ],
+      "flat": "/img/p/white-tee/white-tee_09_flat",
+      "swatch": "#ded7ce"
+    }
+  },
+  "bundles": {
+    "couple-black-set_polo-tee": {
+      "src": "/img/b/couple-black-set_polo-tee",
+      "ratio": 1.2
+    },
+    "couple-hoodie-set_white-black": {
+      "src": "/img/b/couple-hoodie-set_white-black",
+      "ratio": 1.2
+    },
+    "couple-white-set_polo-tee": {
+      "src": "/img/b/couple-white-set_polo-tee",
+      "ratio": 1.2
+    },
+    "flat_couple-hoodies_black-white": {
+      "src": "/img/b/flat_couple-hoodies_black-white",
+      "ratio": 1.2
+    },
+    "flat_her-summer-set_tee-tank_white-black": {
+      "src": "/img/b/flat_her-summer-set_tee-tank_white-black",
+      "ratio": 1.2
+    },
+    "flat_hoodie-plus-sweatshirt_maroon-nude": {
+      "src": "/img/b/flat_hoodie-plus-sweatshirt_maroon-nude",
+      "ratio": 1.2
+    },
+    "flat_layering-set_hoodie-tee_navy-white": {
+      "src": "/img/b/flat_layering-set_hoodie-tee_navy-white",
+      "ratio": 1.2
+    },
+    "flat_polo-3-pack_black-royal-teal": {
+      "src": "/img/b/flat_polo-3-pack_black-royal-teal",
+      "ratio": 1.2
+    },
+    "flat_winter-sweatshirt-3-pack_black-navy-olive": {
+      "src": "/img/b/flat_winter-sweatshirt-3-pack_black-navy-olive",
+      "ratio": 1.2
+    },
+    "her-sweatshirt-trio_nude-olive-navy": {
+      "src": "/img/b/her-sweatshirt-trio_nude-olive-navy",
+      "ratio": 1.5
+    }
+  },
+  "hero": {
+    "desktop": "/img/home/hero",
+    "mobile": "/img/home/hero-mobile-800.webp",
+    "og": "/img/home/hero-1200.jpg",
+    "width": 1672,
+    "height": 941
+  }
+}

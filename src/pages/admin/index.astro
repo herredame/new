@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Orders" description="Order admin" noindex>
+  <div class="wrap" style="padding:32px var(--gutter) 80px">
+    <h1>Orders</h1>
+    <form data-login class="form" style="max-width:420px">
+      <label>Admin token<input type="password" name="token" autocomplete="current-password" required /></label>
+      <button class="btn" type="submit">Open orders</button>
+    </form>
+    <div data-panel hidden>
+      <div class="subnav" data-filters>
+        {['all', 'new', 'confirmed', 'shipped', 'delivered', 'cancelled', 'returned'].map((s) => <button type="button" class="chip" data-status={s}>{s}</button>)}
+        <button type="button" class="chip" data-csv>Download CSV</button>
+      </div>
+      <p class="muted" data-count></p>
+      <div data-list></div>
+    </div>
+  </div>
+  <style>
+    .order { border: 1px solid var(--line); background: #fff; padding: 16px; margin-bottom: 12px; display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; font-size: 14px; }
+    .order h3 { font-family: var(--sans); font-size: 15px; margin: 0 0 4px; }
+    .order select { padding: 8px; }
+    @media (max-width: 800px) { .order { grid-template-columns: 1fr; } }
+  </style>
+  <script>
+    const KEY = 'hd_admin_token';
+    const login = document.querySelector('[data-login]') as HTMLFormElement;
+    const panel = document.querySelector('[data-panel]') as HTMLElement;
+    const list = document.querySelector('[data-list]') as HTMLElement;
+    const count = document.querySelector('[data-count]') as HTMLElement;
+    let token = '';
+    try { token = sessionStorage.getItem(KEY) || ''; } catch {}
+    let current: any[] = [];
+    const esc = (s: any) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } as any)[c]);
+    const rs = (n: number) => 'Rs ' + Number(n).toLocaleString('en-PK');
+
+    async function load(status = 'all') {
+      const res = await fetch(`/api/admin/orders${status === 'all' ? '' : `?status=${status}`}`, { headers: { authorization: `Bearer ${token}` } });
+      if (res.status === 401) { try { sessionStorage.removeItem(KEY); } catch {} panel.hidden = true; login.hidden = false; alert('Wrong token'); return; }
+      const { orders } = await res.json();
+      current = orders;
+      login.hidden = true; panel.hidden = false;
+      count.textContent = `${orders.length} orders · ${rs(orders.reduce((s: number, o: any) => s + o.total, 0))}`;
+      list.innerHTML = orders.map((o: any) => {
+        const items = (o.items.lines || []).map((l: any) => l.type === 'bundle'
+          ? `${l.qty} × ${esc(l.name)} (${l.parts.map((p: any) => `${esc(p.color)} ${esc(p.size)}`).join(' + ')})`
+          : `${l.qty} × ${esc(l.name)} (${esc(l.color)}, ${esc(l.size)})`).join('<br>');
+        const wa = `https://wa.me/92${o.phone.slice(1)}?text=${encodeURIComponent(`Assalam o Alaikum ${o.name}, this is Herre&Dame. Please confirm your order ${o.id} of ${rs(o.total)} (cash on delivery) to ${o.address}, ${o.city}. Reply YES to confirm.`)}`;
+        return `<div class="order">
+          <div><h3>${esc(o.id)} · ${rs(o.total)}</h3><span class="muted">${new Date(o.created_at).toLocaleString('en-PK')}</span><p style="margin:8px 0 0">${items}</p>${o.gift ? '<p><strong>Gift: hide prices</strong></p>' : ''}${o.notes ? `<p>Notes: ${esc(o.notes)}</p>` : ''}</div>
+          <div><strong>${esc(o.name)}</strong><br>${esc(o.phone)} · <a href="${wa}" target="_blank" rel="noopener" style="text-decoration:underline">WhatsApp</a><br>${esc(o.address)}${o.area ? ', ' + esc(o.area) : ''}<br>${esc(o.city)}${o.email ? '<br>' + esc(o.email) : ''}</div>
+          <div><select data-id="${esc(o.id)}">${['new', 'confirmed', 'shipped', 'delivered', 'cancelled', 'returned'].map((s) => `<option ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}</select></div>
+        </div>`;
+      }).join('') || '<p>No orders yet.</p>';
+    }
+
+    login.addEventListener('submit', (e) => {
+      e.preventDefault();
+      token = String(new FormData(login).get('token') || '');
+      try { sessionStorage.setItem(KEY, token); } catch {}
+      load();
+    });
+    document.querySelector('[data-filters]')!.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.dataset.status) load(t.dataset.status);
+      if (t.hasAttribute('data-csv')) {
+        const cols = ['id', 'created_at', 'status', 'name', 'phone', 'address', 'area', 'city', 'total', 'notes'];
+        const csv = [cols.join(','), ...current.map((o) => cols.map((c) => `"${String(o[c] ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
+        const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv], { type: 'text/csv' })), download: 'orders.csv' });
+        a.click();
+      }
+    });
+    list.addEventListener('change', async (e) => {
+      const s = e.target as HTMLSelectElement;
+      await fetch('/api/admin/orders', { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify({ id: s.dataset.id, status: s.value }) });
+    });
+    if (token) load();
+  </script>
+</Base>

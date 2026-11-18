@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Your bag" description="Your Herre&Dame shopping bag." noindex>
+  <div class="wrap">
+    <h1 style="margin-top:32px">Your bag</h1>
+    <div data-cart-root>
+      <p class="muted">Loading your bag…</p>
+    </div>
+  </div>
+  <script>
+    import { setQty } from '../scripts/cart-store.js';
+    import { currentCart, summaryHtml, nudgeHtml, lineImage, lineUrl, lineDetail, esc, formatPKR } from '../scripts/cart-view.js';
+    const root = document.querySelector('[data-cart-root]') as HTMLElement;
+
+    function render() {
+      const cart = currentCart();
+      if (!cart.lines.length) {
+        root.innerHTML = `<div class="empty"><p>Your bag is empty.</p><a class="btn" href="/men/polo-shirts/">Shop polos</a> <a class="btn btn-light" href="/bundles/">Shop sets</a></div>`;
+        return;
+      }
+      root.innerHTML = `
+        <div class="cart-grid">
+          <div>${cart.lines.map((l, i) => `
+            <div class="line">
+              <a href="${lineUrl(l)}"><img src="${lineImage(l)}" alt="" width="88" height="110" loading="lazy"></a>
+              <div>
+                <h3><a href="${lineUrl(l)}">${esc(l.name)}</a></h3>
+                <p>${lineDetail(l)}</p>
+                <div class="qty" style="margin-top:10px">
+                  <button type="button" data-i="${i}" data-d="-1" aria-label="Decrease quantity">−</button>
+                  <input type="number" value="${l.qty}" readonly aria-label="Quantity">
+                  <button type="button" data-i="${i}" data-d="1" aria-label="Increase quantity">+</button>
+                </div>
+                <br><button type="button" class="remove" data-remove="${i}">Remove</button>
+              </div>
+              <div>${formatPKR(l.lineTotal)}${l.type === 'bundle' ? `<br><span class="strike" style="margin:0;font-size:13px">${formatPKR(l.unitList * l.qty)}</span>` : ''}</div>
+            </div>`).join('')}
+          </div>
+          <aside class="summary">
+            <h2>Summary</h2>
+            ${summaryHtml(cart)}
+            ${nudgeHtml(cart)}
+            <a class="btn btn-block" href="/checkout/" style="margin-top:20px">Checkout · Cash on delivery</a>
+            <p class="muted" style="font-size:12px;margin-top:12px">Multi-buy savings are applied automatically.</p>
+          </aside>
+        </div>`;
+    }
+    root.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.dataset.remove) setQty(Number(t.dataset.remove), 0);
+      else if (t.dataset.i) {
+        const cart = currentCart();
+        const l = cart.lines[Number(t.dataset.i)];
+        setQty(Number(t.dataset.i), l.qty + Number(t.dataset.d));
+      }
+    });
+    window.addEventListener('cart:change', render);
+    render();
+  </script>
+</Base>

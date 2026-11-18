@@ -1,0 +1,26 @@
+---
+import Img from './Img.astro';
+import { productUrl, imagesFor, priceOf } from '../data/catalog.js';
+import { formatPKR } from '../lib/pricing.js';
+interface Props { product: any; color: any; showDots?: boolean; eager?: boolean }
+const { product, color, showDots = true, eager = false } = Astro.props;
+const set = imagesFor(color.folder);
+const main = set.images[0];
+const alt = set.images.find((i, k) => k > 0 && i.kind === 'lifestyle') || set.images[1];
+---
+<a class="card" href={productUrl(product.id, color.id)}>
+  <div class="card-img">
+    {main && <Img src={main.src} alt={`${product.name} in ${color.name}`} eager={eager} />}
+    {alt && <Img src={alt.src} alt="" class="alt" />}
+  </div>
+  <div class="card-body">
+    <h3 class="card-name">{product.name}</h3>
+    <p class="card-color">{color.name}</p>
+    <p class="card-price">{formatPKR(priceOf(product.id))}</p>
+    {showDots && product.colors.length > 1 && (
+      <div class="dots" aria-label={`${product.colors.length} colours`}>
+        {product.colors.slice(0, 8).map((c) => <span style={`background:${imagesFor(c.folder).swatch || '#ccc'}`} title={c.name} />)}
+      </div>
+    )}
+  </div>
+</a>

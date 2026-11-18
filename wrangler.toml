@@ -1,0 +1,10 @@
+# Cloudflare Pages project config.
+name = "herre-dame-store"
+compatibility_date = "2026-11-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "herre-dame-orders"
+# Replace with the id printed by: npx wrangler d1 create herre-dame-orders
+database_id = "00000000-0000-0000-0000-000000000000"

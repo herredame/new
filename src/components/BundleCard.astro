@@ -1,0 +1,19 @@
+---
+import { bundleUrl, bundlePrice, BUNDLE_IMAGES } from '../data/catalog.js';
+import { formatPKR } from '../lib/pricing.js';
+interface Props { bundle: any }
+const { bundle } = Astro.props;
+const { list, price, saving } = bundlePrice(bundle);
+const img = BUNDLE_IMAGES[bundle.image];
+---
+<a class="card" href={bundleUrl(bundle.id)}>
+  <div class="card-img" style="aspect-ratio: 4 / 3">
+    {img && <img src={`${img.src}-600.webp`} srcset={`${img.src}-600.webp 600w, ${img.src}-1200.webp 1200w`} sizes="(max-width: 700px) 50vw, 33vw" alt={bundle.name} loading="lazy" decoding="async" width="600" height={Math.round(600 / img.ratio)} />}
+    <span class="badge">Save {formatPKR(saving)}</span>
+  </div>
+  <div class="card-body">
+    <h3 class="card-name">{bundle.name}</h3>
+    <p class="card-color">{bundle.short}</p>
+    <p class="card-price">{formatPKR(price)} <span class="strike" style="font-size:13px">{formatPKR(list)}</span></p>
+  </div>
+</a>

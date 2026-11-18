@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, SHIPPING } from '../data/site.js';
+---
+<Base title="Order confirmed" description="Thank you for your order." noindex>
+  <div class="wrap prose" style="padding-top:48px">
+    <p class="eyebrow">Thank you</p>
+    <h1>Your order is in</h1>
+    <p>Order number <strong data-order-id>…</strong></p>
+    <div data-order-summary></div>
+    <p>We'll message you on WhatsApp to confirm before we dispatch. You can also confirm now, which gets your parcel out faster:</p>
+    <p><a class="btn btn-gold" data-wa href={`https://wa.me/${SITE.whatsapp}`} rel="noopener">Confirm on WhatsApp</a></p>
+    <p class="muted">Delivery in {SHIPPING.deliveryDays}. Pay cash when it arrives. Wrong size? We exchange within {SHIPPING.exchangeDays} days.</p>
+    <p><a href="/" style="text-decoration:underline">Continue shopping</a></p>
+  </div>
+  <script define:vars={{ wa: SITE.whatsapp }}>
+    const id = new URLSearchParams(location.search).get('id') || '';
+    document.querySelector('[data-order-id]').textContent = id || 'pending';
+    let o = null;
+    try { o = JSON.parse(sessionStorage.getItem('hd_last_order') || 'null'); } catch {}
+    const total = o && o.orderId === id ? `Rs ${Number(o.total).toLocaleString('en-PK')}` : '';
+    if (total) document.querySelector('[data-order-summary]').textContent = `Total to pay on delivery: ${total}`;
+    const text = `Hi Herre&Dame, please confirm my order ${id}${total ? ` (${total}, cash on delivery)` : ''}.`;
+    document.querySelector('[data-wa]').href = `https://wa.me/${wa}?text=${encodeURIComponent(text)}`;
+  </script>
+</Base>

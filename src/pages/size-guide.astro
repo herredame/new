@@ -1,0 +1,20 @@
+---
+import Page from '../components/Page.astro';
+import { SIZE_CHARTS } from '../data/catalog.js';
+const names = { polo: "Men's polos", tee: "Women's tees", tank: "Women's tank tops", fleece: 'Hoodies & sweatshirts (unisex)' };
+---
+<Page h1="Size guide" title="Size Guide | Polos, Tees, Hoodies & Sweatshirts" description="Herre&Dame size charts for polos, tees, tank tops, hoodies and sweatshirts, in inches, with fit notes.">
+  <h2>How to measure</h2>
+  <p>Lay a shirt that fits you well flat. Measure straight across under the arms and double it for the chest. Measure length from the highest point of the shoulder to the hem. Compare with the charts below.</p>
+  {Object.entries(SIZE_CHARTS).map(([k, chart]) => (
+    <>
+      <h2>{names[k]}</h2>
+      <p>{chart.note}</p>
+      <table class="sizes-t">
+        <thead><tr>{chart.cols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+        <tbody>{chart.rows.map((r) => <tr>{r.map((v, i) => (i === 0 ? <th scope="row">{v}</th> : <td>{`${v}″`}</td>))}</tr>)}</tbody>
+      </table>
+    </>
+  ))}
+  <p style="margin-top:24px">Still unsure? Send us your height and usual size on WhatsApp and we'll recommend one.</p>
+</Page>

@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import { breadcrumbs } from '../lib/schema.js';
+interface Props { title: string; description: string; h1: string }
+const { title, description, h1 } = Astro.props;
+const crumbs = [{ name: 'Home', href: '/' }, { name: h1, href: Astro.url.pathname }];
+---
+<Base title={title} description={description} jsonld={breadcrumbs(crumbs)}>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <article class="prose"><h1>{h1}</h1><slot /></article>
+  </div>
+</Base>

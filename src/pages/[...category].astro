@@ -1,0 +1,72 @@
+---
+// Category (PLP) pages and gender hub pages, with clean URLs:
+//   /men/polo-shirts/, /women/t-shirts/, /unisex/hoodies/, /accessories/, /men/, /women/, /unisex/
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import BundleCard from '../components/BundleCard.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { CATEGORIES, GENDERS, PRODUCTS, PROMOTIONS, BUNDLES, productUrl, imagesFor } from '../data/catalog.js';
+import { breadcrumbs, itemList } from '../lib/schema.js';
+
+export function getStaticPaths() {
+  const cats = CATEGORIES.map((c) => ({ params: { category: c.path.replace(/^\/|\/$/g, '') }, props: { kind: 'category', cat: c } }));
+  const hubs = Object.entries(GENDERS).map(([id, g]) => ({ params: { category: id }, props: { kind: 'hub', genderId: id, g } }));
+  return [...cats, ...hubs];
+}
+
+const { kind, cat, genderId, g } = Astro.props;
+
+// Women's hub also shows unisex fleece; men's hub shows polos + unisex fleece.
+const hubCats = {
+  men: ['polos', 'hoodies', 'sweatshirts'],
+  women: ['tees', 'tanks', 'hoodies', 'sweatshirts'],
+  unisex: ['hoodies', 'sweatshirts', 'accessories'],
+};
+
+const catIds = kind === 'category' ? [cat.id] : hubCats[genderId];
+const tiles = PRODUCTS.filter((p) => catIds.includes(p.category))
+  .sort((a, b) => catIds.indexOf(a.category) - catIds.indexOf(b.category))
+  .flatMap((p) => p.colors.filter((c) => imagesFor(c.folder).images.length).map((c) => ({ p, c })));
+const promo = kind === 'category' ? PROMOTIONS.find((pr) => pr.categories.includes(cat.id)) : null;
+
+const title = kind === 'category' ? cat.title : g.title;
+const h1 = kind === 'category' ? cat.h1 : g.h1;
+const description = kind === 'category' ? cat.description : `Shop Herre&Dame for ${g.name.toLowerCase()}: ${catIds.map((id) => CATEGORIES.find((c) => c.id === id).name.toLowerCase()).join(', ')}. Cash on delivery across Pakistan.`;
+const intro = kind === 'category' ? cat.intro : null;
+const crumbs = [{ name: 'Home', href: '/' }];
+if (kind === 'category' && cat.id !== 'accessories') crumbs.push({ name: GENDERS[cat.gender].name, href: GENDERS[cat.gender].path });
+crumbs.push({ name: h1, href: Astro.url.pathname });
+
+const siblings = kind === 'category' ? CATEGORIES.filter((c) => c.gender === cat.gender && c.id !== 'accessories') : CATEGORIES.filter((c) => catIds.includes(c.id));
+const relatedBundles = BUNDLES.filter((b) => b.items.some((it) => catIds.includes(PRODUCTS.find((p) => p.id === it.product).category))).slice(0, 3);
+---
+<Base
+  title={title}
+  description={description}
+  image={tiles[0] ? `${imagesFor(tiles[0].c.folder).images[0].src}-1200.jpg` : undefined}
+  jsonld={[breadcrumbs(crumbs), itemList(tiles.map(({ p, c }) => productUrl(p.id, c.id)))]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <header class="plp-head">
+      <h1>{h1}</h1>
+      {intro && <p>{intro}</p>}
+      <p class="muted">{tiles.length} {tiles.length === 1 ? 'style' : 'styles'}</p>
+    </header>
+    {siblings.length > 1 && (
+      <nav class="subnav" aria-label="Categories">
+        {siblings.map((s) => <a class="chip" href={s.path} aria-current={kind === 'category' && s.id === cat.id ? 'page' : undefined}>{s.name}</a>)}
+      </nav>
+    )}
+    {promo && <div class="promo-bar">{promo.blurb}. Applied automatically in your bag.</div>}
+    <div class="grid">
+      {tiles.map(({ p, c }, i) => <ProductCard product={p} color={c} showDots={false} eager={i < 2} />)}
+    </div>
+    {relatedBundles.length > 0 && (
+      <section class="section">
+        <div class="section-head"><h2>Sets that include these</h2><a class="link-arrow" href="/bundles/">All sets</a></div>
+        <div class="grid grid-3">{relatedBundles.map((b) => <BundleCard bundle={b} />)}</div>
+      </section>
+    )}
+  </div>
+</Base>
