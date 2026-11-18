@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE, SHIPPING } from '../data/site.js';
-import { CATEGORIES } from '../data/catalog.js';
+import { CATEGORIES, LAUNCH_OFFER, launchOfferActive } from '../data/catalog.js';
 
 interface Props {
   title: string;
@@ -51,6 +51,8 @@ const nav = [
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
+    {launchOfferActive() && <a class="announce announce-launch" href="/bundles/" data-ends={LAUNCH_OFFER.ends}>{LAUNCH_OFFER.blurb} · Applied automatically at checkout</a>}
+    {launchOfferActive() && <script is:inline>(function(){var a=document.querySelector('.announce-launch');if(a&&Date.now()>Date.parse(a.dataset.ends))a.remove();})();</script>}
     <div class="announce">Free delivery over Rs {SHIPPING.freeThreshold.toLocaleString('en-PK')} · Cash on delivery across Pakistan · {SHIPPING.exchangeDays}-day size exchange</div>
     <header class="header">
       <div class="wrap header-in">

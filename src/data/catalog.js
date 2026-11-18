@@ -222,6 +222,19 @@ export const PROMOTIONS = [
   { id: 'fleece-multibuy', type: 'tiered-percent', categories: ['hoodies', 'sweatshirts'], label: 'Hoodies & sweatshirts multi-buy', tiers: [{ min: 3, pct: 0.15 }, { min: 2, pct: 0.1 }], blurb: 'Any 2 hoodies or sweatshirts save 10% · 3 or more save 15%' },
 ];
 
+// Season launch offer: extra % off the whole order (after the deals above) when
+// the order reaches `minSubtotal`. Runs automatically between `starts` and `ends`
+// (Pakistan time), no code needed. Set `ends` to a past date to switch it off.
+export const LAUNCH_OFFER = {
+  id: 'season-launch', label: 'Season launch: extra 10% off', pct: 0.1, minSubtotal: 5000,
+  starts: '2026-11-18T00:00:00+05:00', ends: '2026-12-15T23:59:59+05:00',
+  blurb: 'Season launch: extra 10% off orders over Rs 5,000, till 15 December',
+};
+
+export function launchOfferActive(now = Date.now()) {
+  return now >= Date.parse(LAUNCH_OFFER.starts) && now <= Date.parse(LAUNCH_OFFER.ends);
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------

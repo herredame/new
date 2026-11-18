@@ -2,7 +2,7 @@
 // (functions/api/order.js), so both always agree. The server never trusts
 // prices sent by the browser: it only takes SKUs, bundle ids and quantities.
 import {
-  PROMOTIONS, productById, bundleById, priceOf, bundlePrice, colorOf, parseSku, isValidVariant,
+  PROMOTIONS, LAUNCH_OFFER, launchOfferActive, productById, bundleById, priceOf, bundlePrice, colorOf, parseSku, isValidVariant,
 } from '../data/catalog.js';
 import { SHIPPING } from '../data/site.js';
 
@@ -72,6 +72,13 @@ export function priceCart(lines = []) {
       if (tier) amount = Math.round((eligible.reduce((s, u) => s + u.price, 0) * tier.pct) / 10) * 10;
     }
     if (amount > 0) discounts.push({ id: promo.id, label: promo.label, amount });
+  }
+
+  // Launch offer on top of the deals above, on what is left after them.
+  const afterDeals = subtotal - discounts.reduce((s, d) => s + d.amount, 0);
+  if (launchOfferActive() && afterDeals >= LAUNCH_OFFER.minSubtotal) {
+    const amount = Math.round((afterDeals * LAUNCH_OFFER.pct) / 10) * 10;
+    if (amount > 0) discounts.push({ id: LAUNCH_OFFER.id, label: LAUNCH_OFFER.label, amount });
   }
 
   const discountTotal = discounts.reduce((s, d) => s + d.amount, 0);

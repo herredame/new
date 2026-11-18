@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard.astro';
 import BundleCard from '../components/BundleCard.astro';
 import Img from '../components/Img.astro';
 import { SITE, SHIPPING } from '../data/site.js';
-import { PRODUCTS, BUNDLES, productById, imagesFor, BUNDLE_IMAGES, HERO } from '../data/catalog.js';
+import { PRODUCTS, BUNDLES, productById, imagesFor, BUNDLE_IMAGES, HERO, LAUNCH_OFFER, launchOfferActive, bundlePrice } from '../data/catalog.js';
 import { organization, website } from '../lib/schema.js';
 
 const polos = PRODUCTS.filter((p) => p.category === 'polos').flatMap((p) => p.colors.map((c) => ({ p, c })));
@@ -16,8 +16,10 @@ const winter = [
   { p: hoodie, c: hoodie.colors.find((c) => c.id === 'white') },
   { p: sweat, c: sweat.colors.find((c) => c.id === 'olive') },
 ];
-const coupleImg = BUNDLE_IMAGES['couple-black-set_polo-tee'];
-const featuredBundles = ['his-and-hers-hoodie-set', 'couple-polo-tee-set-white', 'winter-sweatshirt-3-pack'].map((id) => BUNDLES.find((b) => b.id === id));
+const coupleSet = BUNDLES.find((b) => b.id === 'couple-polo-tee-set-black');
+const coupleSave = bundlePrice(coupleSet).saving;
+const launchOn = launchOfferActive();
+const featuredBundles = ['his-and-hers-hoodie-set', 'couple-polo-tee-set-black', 'winter-sweatshirt-3-pack', 'couple-polo-tee-set-white', 'her-neutral-sweatshirt-trio', 'hoodie-sweatshirt-pair'].map((id) => BUNDLES.find((b) => b.id === id));
 const tiles = [
   { href: '/men/polo-shirts/', label: 'Polo shirts', img: imagesFor('teal-polo').images.find((i) => i.kind === 'lifestyle') },
   { href: '/unisex/hoodies/', label: 'Hoodies', img: imagesFor('white-hoodie').images.find((i) => i.kind === 'lifestyle') },
@@ -59,6 +61,15 @@ const tiles = [
     <div><strong>Honest prices</strong>No fake sales, ever</div>
   </div>
 
+  {launchOn && (
+    <section class="launch-strip">
+      <p class="eyebrow" style="color:#c9a96e">Winter 2026 season launch</p>
+      <h2>Extra 10% off orders over Rs 5,000</h2>
+      <p>On top of every set and multi-buy deal, taken off automatically at checkout. Ends 15 December.</p>
+      <a class="btn btn-gold" href="/bundles/">Shop the sets</a>
+    </section>
+  )}
+
   <section class="section">
     <div class="wrap">
       <div class="section-head">
@@ -80,13 +91,18 @@ const tiles = [
   </section>
 
   <section class="section section-sand">
-    <div class="wrap split">
-      {coupleImg && <img src={`${coupleImg.src}-1200.webp`} srcset={`${coupleImg.src}-600.webp 600w, ${coupleImg.src}-1200.webp 1200w`} sizes="(max-width: 800px) 100vw, 55vw" alt="Matching black polo and tee couple set" loading="lazy" width="1200" height={Math.round(1200 / coupleImg.ratio)} />}
+    <div class="wrap split video-split">
+      <video autoplay muted loop playsinline preload="metadata" poster="/video/couple-black-set-poster.jpg" width="540" height="960" aria-label="A couple in a black tipped polo and a black tank top">
+        <source src="/video/couple-black-set.mp4" type="video/mp4" />
+      </video>
       <div>
         <p class="eyebrow">The couple edit</p>
         <h2>Matching sets, sized for each of you</h2>
-        <p>Herre &amp; Dame means "gentlemen &amp; ladies". Every set comes with a separate size for each piece, so the person paying doesn't have to guess for the person wearing it. Wrong size? We exchange it.</p>
-        <a class="btn" href="/bundles/">Shop sets &amp; bundles</a>
+        <p>Herre &amp; Dame means "gentlemen &amp; ladies". Black on black, his and hers. Every set has a separate size for each of you and costs less than buying the pieces apart (Rs {coupleSave.toLocaleString('en-PK')} off the black polo + tee set). Wrong size? We exchange it.</p>
+        <div class="actions" style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href={`/bundles/${coupleSet.id}/`}>Shop the black set</a>
+          <a class="btn btn-light" href="/bundles/">All couple sets</a>
+        </div>
       </div>
     </div>
   </section>
