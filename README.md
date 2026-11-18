@@ -11,7 +11,7 @@ Fast, SEO-first shop for Herre&Dame. Static Astro site on Cloudflare Pages (free
 | Cart pricing, shared by browser and server | `src/lib/pricing.js` | Promotion engine / basket calculation |
 | JSON-LD (ProductGroup, Offer, BreadcrumbList, Organization) | `src/lib/schema.js` | SEO cartridge |
 | Pages: home, category (PLP), product (PDP), bundles, cart, checkout | `src/pages/` | ISML templates + controllers |
-| Order API (COD) | `functions/api/order.js` | Order placement controller |
+| Order API (COD) | `functions/api/order.js`, routed by `src/server/worker.js` | Order placement controller |
 | Order admin (status, WhatsApp confirm, CSV) | `/admin/` + `functions/api/admin/orders.js` | Business Manager orders |
 | Images | `public/img/` (WebP, made by `npm run images`) | Dynamic imaging service |
 
@@ -24,7 +24,7 @@ npm install
 npm run dev                 # site only, http://localhost:4321
 cp .dev.vars.example .dev.vars
 npm run db:local            # create the local orders table
-npm run dev:full            # site + order API + local D1, http://localhost:8788
+npm run dev:full            # site + order API + local D1, http://localhost:8787
 ```
 
 ## Before launch: things to change
@@ -33,21 +33,17 @@ npm run dev:full            # site + order API + local D1, http://localhost:8788
 2. `src/data/site.js`: domain (`url`), WhatsApp number, email, Instagram.
 3. Re-import images after adding new photos: `npm run images -- "<path to Relaunch Edits 2026>" "<path to HomePage content>"`.
 
-## Deploy to Cloudflare Pages (one time, about 10 minutes)
+## Deploy (Cloudflare Workers with static assets)
 
-1. `npx wrangler login`
-2. `npx wrangler d1 create herre-dame-orders` and paste the `database_id` into `wrangler.toml`.
-3. `npm run db:remote` to create the orders table.
-4. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → pick this repo.
-   - Build command: `npm run build`
-   - Output directory: `dist`
-   - Environment variable: `NODE_VERSION` = `22`
-5. Project → Settings → Bindings → add D1 database, variable name `DB`, database `herre-dame-orders`.
-6. Project → Settings → Variables and secrets → add secret `ADMIN_TOKEN` (a long random string). Optional: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` for new-order alerts.
-7. Project → Custom domains → add your domain. If the domain's DNS is not on Cloudflare yet, Cloudflare shows the records to add at your registrar.
-8. Submit `https://<domain>/sitemap-index.xml` in Google Search Console.
+The live site is the Worker `new` in the Herredame.contact Cloudflare account, built from `main` on every push.
 
-Every push to `main` deploys automatically. Pull requests get preview URLs.
+- Build command: `npm run build` · Deploy command: `npx wrangler deploy` (both set in the dashboard)
+- `wrangler.toml` holds the Worker name, the `dist` assets folder and the D1 binding `DB`
+- `src/server/worker.js` handles `/api/order` and `/api/admin/orders`, and everything else is served from `dist`
+- Secret `ADMIN_TOKEN` (and optional `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) are set under the Worker's Settings → Variables and Secrets
+- Custom domain: Worker → Settings → Domains & Routes → Add → Custom domain (`herredame.com`, `www.herredame.com`)
+
+Deploy by hand from your Mac with `npm run deploy` after `npx wrangler login`.
 
 ## Managing orders
 

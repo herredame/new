@@ -1,10 +1,21 @@
-# Cloudflare Pages project config.
-name = "herre-dame-store"
+# Cloudflare Worker config: static site from `dist` + order API in src/server/worker.js.
+# The name must match the Worker created in the Cloudflare dashboard.
+name = "new"
+main = "src/server/worker.js"
 compatibility_date = "2026-11-01"
-pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+run_worker_first = ["/api/*"]
 
 [[d1_databases]]
 binding = "DB"
 database_name = "herre-dame-orders"
 # D1 database in the Herredame.contact Cloudflare account.
 database_id = "c2f332c5-29e4-4586-a2f9-4c238a079d21"
+
+[observability]
+enabled = true

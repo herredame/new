@@ -8,9 +8,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "images": "node scripts/import-images.mjs",
-    "dev:full": "astro build && wrangler pages dev dist",
+    "dev:full": "astro build && wrangler dev",
     "db:local": "wrangler d1 execute herre-dame-orders --local --file=schema.sql",
-    "db:remote": "wrangler d1 execute herre-dame-orders --remote --file=schema.sql"
+    "db:remote": "wrangler d1 execute herre-dame-orders --remote --file=schema.sql",
+    "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",
